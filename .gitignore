@@ -1,0 +1,7 @@
+**/node_modules/
+**/.env*
+
+
+backend/node_modules
+frontend/src/firebase-config.js
+backend/config/trackdrug-firebase-adminsdk-fbsvc-2136c83eba.json
