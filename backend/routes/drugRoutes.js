@@ -6,17 +6,18 @@ const {
   getDrugById
 } = require("../controllers/drugcontroller");
 
+const authenticate = require("../middleware/firebaseAuth");
 // ✅ Custom test route — MUST come before /:id
 drugrouter.get("/test", (req, res) => {
   res.send("✅ Drug API is reachable");
 });
 
 // ✅ Main drug routes
-drugrouter.post("/", addDrug);
-drugrouter.get("/", getAllDrugs);
+drugrouter.post("/",authenticate, addDrug);
+drugrouter.get("/",authenticate, getAllDrugs);
 
 // ✅ Dynamic route LAST
-drugrouter.get("/:id", getDrugById);
+drugrouter.get("/:id",authenticate, getDrugById);
 
 module.exports = drugrouter;
 

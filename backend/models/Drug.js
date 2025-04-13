@@ -4,9 +4,11 @@ const mongoose = require("mongoose");
 
 const drugSchema = new mongoose.Schema({
   name: { type: String },
+  userId: { type: String, required: true },
   batchNumber: { type: String },
   manufactureDate: { type: Date },
   expiryDate: { type: Date },
+  qrCodeUrl: { type: String },
   currentLocation: { type: String },
   history: [
     {

@@ -1,11 +1,16 @@
 const Drug = require("../models/Drug");
 
 const addDrug = async (req, res) => {
-  console.log("🔥 addDrug endpoint called"); // ← should always print
-  console.log("📦 Request body:", req.body); // ← this should print the body
+  console.log("🔥 addDrug endpoint called");
+  console.log("📦 Request body:", req.body);
+  console.log("🔐 Authenticated user:", req.user.uid); // from middleware
 
   try {
-    const newDrug = new Drug(req.body);
+    const newDrug = new Drug({
+      ...req.body,
+      userId: req.user.uid  // ✅ Set the drug's owner as the logged-in user
+    });
+
     await newDrug.save();
     res.status(201).json(newDrug);
   } catch (err) {
