@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../firebase-config.js";
+import { signInWithEmailAndPassword } from "firebase/auth"; 
 import axios from "axios";
 
 export default function Login() {
@@ -11,28 +12,26 @@ export default function Login() {
   const handleEmailLogin = async (e) => {
     e.preventDefault();
     setError(null);
-
+  
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
-
-      console.log("✅ User logged in via backend:", response.data);
-
-      // Delay alert to let the UI reflect the login
-      setTimeout(() => {
-        alert(response.data.message || "Login successful");
-      }, 0);
+      // Firebase login
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      const token = await user.getIdToken();
+  
+      console.log("✅ Firebase login successful:", user.email);
+  
+      // Send token to backend for optional verification
+      await axios.post("http://localhost:5000/api/auth/firebase-login", {
+        token,
+      });
+  
+      alert("Login successful!");
+      // Redirection will happen automatically in App.js due to auth state change
+  
     } catch (error) {
-      console.error(
-        "❌ Backend login error:",
-        error.response?.data || error.message
-      );
-      setError(error.response?.data?.message || error.message);
+      console.error("❌ Firebase login failed:", error.message);
+      setError(error.message);
     }
   };
 

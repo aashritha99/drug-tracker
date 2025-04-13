@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 import { auth } from "../firebase-config.js";
 import axios from "axios";
 
@@ -15,12 +17,16 @@ export default function Signup() {
     setError(null);
 
     try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const firebaseUser = userCredential.user;
+    const token = await firebaseUser.getIdToken();
       const response = await axios.post(
         "http://localhost:5000/api/auth/signup",
         {
           name,
           email,
           password,
+          token
         }
       );
 
