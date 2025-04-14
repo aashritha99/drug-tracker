@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import Card from './Card';
 
 const Dashboard = ({ user, handleLogout }) => {
+  const Navigate = useNavigate();
   return (
     <div style={{ padding: '2rem', fontFamily: 'Arial' }}>
       {/* Header Section */}
@@ -53,7 +56,9 @@ const Dashboard = ({ user, handleLogout }) => {
           >
             View History
           </button>
+          <button onClick={() => Navigate("/upload")}>Click to go to upload Page</button>
         </div>
+        <Card/>
       </div>
     </div>
   );

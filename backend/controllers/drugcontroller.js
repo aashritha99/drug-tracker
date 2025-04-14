@@ -3,12 +3,12 @@ const Drug = require("../models/Drug");
 const addDrug = async (req, res) => {
   console.log("🔥 addDrug endpoint called");
   console.log("📦 Request body:", req.body);
-  console.log("🔐 Authenticated user:", req.user.uid); // from middleware
+  console.log("🔐 Authenticated user:", req.user._id); // from middleware
 
   try {
     const newDrug = new Drug({
       ...req.body,
-      userId: req.user.uid  // ✅ Set the drug's owner as the logged-in user
+      userId: req.user._id  // ✅ Set the drug's owner as the logged-in user
     });
 
     await newDrug.save();
