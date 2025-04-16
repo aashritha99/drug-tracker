@@ -5,6 +5,11 @@ const UserSchema = new mongoose.Schema(
     name: { type: String },
     email: { type: String, required: true, unique: true },
     password: { type: String }, // Only for local/email signup
+    role: {
+      type: String,
+      enum: ['manufacturer', 'user'],
+      required: true,
+    },
     photo: { type: String },
     provider: {
       type: String,

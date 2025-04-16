@@ -1,9 +1,9 @@
-const admin = require("../firebase"); // 👈 from firebase.js
-const User = require("../models/User"); // your Mongoose model
+const admin = require("../firebase");
+const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 const firebaseLogin = async (req, res) => {
-  const { token } = req.body;
+  const { token, role } = req.body; // 🔹 role comes from frontend
   console.log(token);
 
   try {
@@ -14,19 +14,23 @@ const firebaseLogin = async (req, res) => {
 
     // Check if user exists
     let user = await User.findOne({ email });
-     console.log("yes")
+    console.log("yes");
+
     if (!user) {
       user = await User.create({
         email,
         name,
-        provider: "google", // add this line to track source
-        googleId: uid, // optional, store UID if needed
+        provider: "google",
+        googleId: uid,
         photo: decodedToken.picture || null,
+        role, // 🔹 Save the selected role
       });
     }
-      console.log(user);
+
+    console.log(user);
+
     // Generate your own JWT
-    const ourToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const ourToken = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 
@@ -38,5 +42,3 @@ const firebaseLogin = async (req, res) => {
 };
 
 module.exports = { firebaseLogin };
-
-

@@ -6,7 +6,9 @@ import { auth } from './firebase-config.js';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import './index.css';
-import Upload from "./components/Upload.js";
+import Upload from "./pages/Upload.js";
+import Footer from "./components/Footer.js";
+import UserDashboard from "./pages/UserDashboard.js";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -48,43 +50,48 @@ function App() {
             user ? (
               <Dashboard user={user} handleLogout={handleLogout} />
             ) : (
-              <div className="p-8 max-w-2xl mx-auto bg-gray-100 rounded-lg shadow-md font-sans">
-                <h1 className="text-2xl text-blue-500 font-semibold text-center text-gray-800 mb-8">
-                  DrugTrack – Auth Portal
-                </h1>
+              <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-200 via-white to-slate-300 font-sans">
+  <div className="p-8 max-w-2xl w-full bg-white/60 backdrop-blur-md rounded-lg shadow-lg">
+    <h1 className=" text-3xl  font-extrabold text-center text-purple-600 mb-6 tracking-wide leading-snug ">
+      DrugTrack 
+    </h1>
 
-                <div>
-                  <div className="flex justify-center mb-8">
-                    <button
-                      onClick={() => setActiveTab('login')}
-                      className={`px-5 py-2 rounded-l-md transition-colors duration-300 ${
-                        activeTab === 'login'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-300 text-gray-800'
-                      }`}
-                    >
-                      Login
-                    </button>
-                    <button
-                      onClick={() => setActiveTab('signup')}
-                      className={`px-5 py-2 rounded-r-md transition-colors duration-300 ${
-                        activeTab === 'signup'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-300 text-gray-800'
-                      }`}
-                    >
-                      Signup
-                    </button>
-                  </div>
+    <div>
+      <div className="flex justify-center mb-6 ">
+        <button
+          onClick={() => setActiveTab('login')}
+          className={`px-5 py-2 rounded-l-md  transition-colors duration-300 ${
+            activeTab === 'login'
+              ? 'bg-purple-600 text-white'
+              : 'bg-gray-200 text-gray-800'
+          }`}
+        >
+          Login
+        </button>
+        <button
+          onClick={() => setActiveTab('signup')}
+          className={`px-5 py-2 rounded-r-md  transition-colors duration-300 ${
+            activeTab === 'signup'
+              ? 'bg-red-500 text-white'
+              : 'bg-gray-200 text-gray-800'
+          }`}
+        >
+          Signup
+        </button>
+      </div>
 
-                  {activeTab === 'login' ? <Login /> : <Signup />}
-                </div>
-              </div>
+      {activeTab === 'login' ? <Login /> : <Signup />}
+    </div>
+  </div>
+</div>
+
             )
           }
         />
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/upload" element={<Upload/>}/>
+        <Route path="/UserDashboard" element={<UserDashboard/>}/>
+        <Route path="/Footer" element={<Footer/>}/>
       </Routes>
     </Router>
   );

@@ -1,64 +1,58 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from './Card';
+import Footer from './Footer';
 
 const Dashboard = ({ user, handleLogout }) => {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
+
   return (
-    <div style={{ padding: '2rem', fontFamily: 'Arial' }}>
+    <div className="p-8 font-sans bg-gray-100 min-h-screen">
       {/* Header Section */}
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '1rem', borderBottom: '2px solid #ddd' }}>
-        <h1 style={{ margin: 0, fontSize: '24px', color: '#333' }}>DrugTrack</h1>
+      <header className="flex justify-between items-center border-b-2 border-gray-300 pb-4">
+        <h1 className="text-2xl font-bold text-gray-800">DrugTrack</h1>
         <button
           onClick={handleLogout}
-          style={{
-            padding: '10px 20px',
-            backgroundColor: '#f44336',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
+          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
         >
           Sign Out
         </button>
       </header>
 
       {/* Main Content */}
-      <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-        <h2>Welcome, {user?.email}</h2>
-        <p>Here is your dashboard where you can manage your drugs and view the history.</p>
+      <div className="text-center mt-8">
+        <h2 className="text-xl font-semibold text-gray-700">Welcome, {user?.email}</h2>
+        <p className="text-gray-600 mt-2">
+          Here is your dashboard where you can manage your drugs and view the history.
+        </p>
         
-        {/* Additional Dashboard elements */}
-        <div style={{ marginTop: '20px' }}>
-          <button
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              marginRight: '10px'
-            }}
-          >
+        <div className="flex items-center justify-center min-h-[50vh] bg-gradient-to-r from-blue-500 to-purple-600">
+  <h1 className="text-5xl font-bold text-white text-center shadow-lg p-6 bg-opacity-50 rounded-lg">
+    Welcome to <span className="text-yellow-300">DrugTrack</span>
+  </h1>
+</div>
+
+        {/* Action Buttons */}
+        <div className="mt-6 flex flex-wrap justify-center gap-4">
+          <button className="px-5 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition">
             Manage Drugs
           </button>
-          <button
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#2196F3',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
+          <button className="px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
             View History
           </button>
-          <button onClick={() => Navigate("/upload")}>Click to go to upload Page</button>
+          <button
+            onClick={() => navigate("/upload")}
+            className="px-5 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition"
+          >
+            about
+          </button>
         </div>
-        <Card/>
+
+        {/* Dashboard Cards */}
+        <div className="mt-10">
+          <Card />
+          <Footer/>
+        </div>
       </div>
     </div>
   );

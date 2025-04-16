@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-
+import { signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config.js";
 import axios from "axios";
 
@@ -9,26 +7,26 @@ export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [error, setError] = useState(null);
+  const [role, setRole] = useState('');
+
 
   const handleSignup = async (e) => {
     e.preventDefault();
     setError(null);
 
     try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const firebaseUser = userCredential.user;
-    const token = await firebaseUser.getIdToken();
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/signup",
-        {
-          name,
-          email,
-          password,
-          token
-        }
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const firebaseUser = userCredential.user;
+      const token = await firebaseUser.getIdToken();
+
+      const response = await axios.post("http://localhost:5000/api/auth/signup", {
+        name,
+        email,
+        password,
+        token,
+        role,
+      });
 
       if (response.data && response.data.message) {
         console.log("✅ User signed up via backend:", response.data);
@@ -66,71 +64,83 @@ export default function Signup() {
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
-      {error && (
-        <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
-      )}
+    <div className="min-h-[70vh]  flex items-center justify-center">
+      <div className="bg-white/30 backdrop-blur-md shadow-lg rounded-lg p-8 w-full max-w-md">
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Sign up</h2>
 
-      <form onSubmit={handleSignup} style={{ marginBottom: "20px" }}>
-        <div style={{ marginBottom: "10px" }}>
-          <input
-            type="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Name"
-            style={{ padding: "8px", width: "100%", maxWidth: "300px" }}
-            required
-          />
-        </div>
-        <div style={{ marginBottom: "10px" }}>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            style={{ padding: "8px", width: "100%", maxWidth: "300px" }}
-            required
-          />
-        </div>
-        <div style={{ marginBottom: "10px" }}>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            style={{ padding: "8px", width: "100%", maxWidth: "300px" }}
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          style={{
-            padding: "8px 16px",
-            backgroundColor: "#4285F4",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
+        {error && (
+          <div className="text-red-600 text-sm text-center mb-4 font-medium">{error}</div>
+        )}
+
+        <form onSubmit={handleSignup} className="space-y-4">
+          <div>
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
+          </div>
+          
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          className="w-full p-2 border rounded mb-4"
         >
-          SignUp with Email
-        </button>
-      </form>
+          <option value="" disabled>
+    -- Select Role --
+  </option>
 
-      <button
-        onClick={handleGoogleSignup}
-        style={{
-          padding: "8px 16px",
-          backgroundColor: "#DB4437",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
-        }}
-      >
-        Signup with Google
-      </button>
+          <option value="manufacturer">Manufacturer</option>
+          <option value="user">User</option>
+        </select>
+
+          <button
+            type="submit"
+            className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition duration-300"
+          >
+            Sign Up with Email
+          </button>
+        </form>
+
+        <div className="mt-6 flex items-center justify-center">
+          <button
+            onClick={handleGoogleSignup}
+            className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300"
+          >
+            Signup with Google
+          </button>
+        </div>
+
+        <p className="mt-6 text-center text-sm text-gray-700">
+          Already have an account?{" "}
+          <a href="/login" className="text-purple-700 hover:underline font-medium">
+            Login here
+          </a>
+        </p>
+      </div>
     </div>
   );
 }
