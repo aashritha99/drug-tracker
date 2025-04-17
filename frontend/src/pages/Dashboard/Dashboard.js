@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Card from '../components/Card';
-import Footer from '../components/Footer';
+import Card from '../../components/Card';
+import Footer from '../../components/Footer';
 
 const Dashboard = ({ user, handleLogout }) => {
   const navigate = useNavigate();
