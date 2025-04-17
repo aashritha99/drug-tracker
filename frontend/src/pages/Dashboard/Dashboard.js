@@ -41,10 +41,10 @@ const Dashboard = ({ user, handleLogout }) => {
             View History
           </button>
           <button
-            onClick={() => navigate("/upload")}
+            onClick={() => navigate("/About")}
             className="px-5 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition"
           >
-            about
+            about updated
           </button>
         </div>
 

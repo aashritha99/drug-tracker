@@ -6,7 +6,7 @@ import { auth } from './firebase-config.js';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import './index.css';
-import Upload from "./pages/Upload.js";
+import About from "./components/About.js";
 import Footer from "./components/Footer.js";
 import UserDashboard from "./pages/Dashboard/UserDashboard.js";
 
@@ -89,7 +89,7 @@ function App() {
           }
         />
         <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/upload" element={<Upload/>}/>
+        <Route path="/About" element={<About/>}/>
         <Route path="/UserDashboard" element={<UserDashboard/>}/>
         <Route path="/Footer" element={<Footer/>}/>
       </Routes>
