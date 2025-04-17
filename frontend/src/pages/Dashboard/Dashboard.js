@@ -34,7 +34,7 @@ const Dashboard = ({ user, handleLogout }) => {
 
         {/* Action Buttons */}
         <div className="mt-6 flex flex-wrap justify-center gap-4">
-          <button className="px-5 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition">
+        <button className="px-5 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition">
             Manage Drugs
           </button>
           <button className="px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
@@ -46,6 +46,13 @@ const Dashboard = ({ user, handleLogout }) => {
           >
             about updated
           </button>
+          <button
+            onClick={() => navigate("/AddDrug")}
+            className="px-5 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition"
+          >
+            add drug
+          </button>
+        </div>
         </div>
 
         {/* Dashboard Cards */}
@@ -54,7 +61,7 @@ const Dashboard = ({ user, handleLogout }) => {
           <Footer/>
         </div>
       </div>
-    </div>
+    
   );
 };
 
