@@ -2,8 +2,10 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./db");
 const cors = require("cors");
-const drugrouter = require("./routes/drugRoutes");
+const drugRoutes = require("./drugRoutes.js");
 const authRoutes = require("./routes/authRoutes");
+const contactRoutes = require("./routes/contactRoutes");
+
 
 // Load environment variables
 dotenv.config();
@@ -17,9 +19,10 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json()); // ✅ to parse incoming JSON
-app.use("/api/drugs", drugrouter);
+app.use("/api/drugs", drugRoutes);
 app.use("/api/drugs", drugRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/Contacts", contactRoutes);
 
 // Default route
 app.get("/", (req, res) => {

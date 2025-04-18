@@ -10,6 +10,7 @@ import About from "./components/About.js";
 import AddDrug from "./pages/AddDrug.js";
 import Footer from "./components/Footer.js";
 import UserDashboard from "./pages/Dashboard/UserDashboard.js";
+import Contact from "./pages/Contact.js";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -93,6 +94,7 @@ function App() {
         <Route path="/About" element={<About/>}/>
         <Route path="/UserDashboard" element={<UserDashboard/>}/>
         <Route path="/AddDrug" element={<AddDrug/>}/>
+        <Route path="/Contact" element={<Contact/>}/>
         <Route path="/Footer" element={<Footer/>}/>
       </Routes>
     </Router>

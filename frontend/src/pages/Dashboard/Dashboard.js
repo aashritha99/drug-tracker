@@ -52,6 +52,12 @@ const Dashboard = ({ user, handleLogout }) => {
           >
             add drug
           </button>
+          <button
+            onClick={() => navigate("/Contact")}
+            className="px-5 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition"
+          >
+            Contact
+          </button>
         </div>
         </div>
 
