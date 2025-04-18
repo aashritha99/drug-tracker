@@ -27,9 +27,12 @@ function App() {
   }, []);
 
   const handleLogout = async () => {
+    console.log("handleLogout called");
+    console.log("Current user before sign out:", auth.currentUser);
     try {
       await signOut(auth);
-      console.log("User signed out");
+      console.log("User signed out successfully");
+      console.log("Current user after sign out:", auth.currentUser);
     } catch (error) {
       console.error("Error signing out:", error.message);
     }
@@ -50,7 +53,12 @@ function App() {
           path="/"
           element={
             user ? (
-              <Dashboard user={user} handleLogout={handleLogout} />
+              // Check user role and redirect accordingly
+              user.role === 'manufacturer' ? (
+                <Dashboard user={user} handleLogout={handleLogout} />
+              ) : (
+                <UserDashboard user={user} handleLogout={handleLogout} />
+              )
             ) : (
               <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-200 via-white to-slate-300 font-sans">
   <div className="p-8 max-w-2xl w-full bg-white/60 backdrop-blur-md rounded-lg shadow-lg">
@@ -92,10 +100,11 @@ function App() {
         />
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/About" element={<About/>}/>
-        <Route path="/UserDashboard" element={<UserDashboard/>}/>
-        <Route path="/AddDrug" element={<AddDrug/>}/>
-        <Route path="/Contact" element={<Contact/>}/>
-        <Route path="/Footer" element={<Footer/>}/>
+        <Route path="/user-dashboard" element={<UserDashboard handleLogout={handleLogout} />}/>
+        <Route path="/dashboard" element={<Dashboard handleLogout={handleLogout} />}/>
+        <Route path="/add-drug" element={<AddDrug/>}/>
+        <Route path="/contact" element={<Contact/>}/>
+        <Route path="/footer" element={<Footer/>}/>
       </Routes>
     </Router>
   );

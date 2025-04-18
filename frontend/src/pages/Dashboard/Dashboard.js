@@ -47,10 +47,10 @@ const Dashboard = ({ user, handleLogout }) => {
             about updated
           </button>
           <button
-            onClick={() => navigate("/AddDrug")}
+            onClick={() => navigate("/add-drug")}
             className="px-5 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition"
           >
-            add drug
+            Add Drug
           </button>
           <button
             onClick={() => navigate("/Contact")}

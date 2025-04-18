@@ -30,11 +30,11 @@ export default function Login() {
       const { user: backendUser } = response.data;
       const role = backendUser.role;
 
-      // Redirect based on role
-      if (role === "manufacturer") {
-        navigate("/Dashboard");
-      } else if (role === "user") {
-        navigate("/UserDashboard");
+     // Redirect based on role
+     if (role === "manufacturer") {
+       navigate("/dashboard");
+     } else if (role === "user") {
+       navigate("/user-dashboard");
       } else {
         alert("Unexpected role.");
       }
@@ -66,11 +66,11 @@ export default function Login() {
       const { user: backendUser } = response.data;
       const role = backendUser.role;
 
-      // Redirect based on role
-      if (role === "manufacturer") {
-        navigate("/Dashboard");
-      } else if (role === "user") {
-        navigate("/UserDashboard");
+     // Redirect based on role
+     if (role === "manufacturer") {
+       navigate("/dashboard");
+     } else if (role === "user") {
+       navigate("/user-dashboard");
       } else {
         alert("Unexpected role.");
       }

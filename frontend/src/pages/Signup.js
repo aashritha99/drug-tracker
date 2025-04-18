@@ -54,6 +54,7 @@ export default function Signup() {
 
       await axios.post("http://localhost:5000/api/auth/firebase-login", {
         token,
+        role: 'user', // Default role for Google signup
       });
 
       alert("Google signup successful!");
