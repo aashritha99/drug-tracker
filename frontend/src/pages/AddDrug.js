@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { getAuth } from "firebase/auth";
 
 const AddDrug = () => {
   const [formData, setFormData] = useState({
@@ -26,10 +27,11 @@ const AddDrug = () => {
     setErrorMessage("");
 
     try {
-      // Make POST request to your backend API
-      const token = localStorage.getItem("token"); // if you're storing firebase token
-      const res = await axios.post(
-        "http://localhost:5000/api/drugs/add",
+      const auth = getAuth();
+      const token = await auth.currentUser.getIdToken();
+
+      await axios.post(
+        "http://localhost:5000/api/drugs/add", // Update this if your route is different
         formData,
         {
           headers: {
@@ -38,7 +40,7 @@ const AddDrug = () => {
         }
       );
 
-      setSuccessMessage("Drug added successfully!");
+      setSuccessMessage("✅ Drug added successfully!");
       setFormData({
         drugName: "",
         batchNumber: "",
@@ -47,7 +49,7 @@ const AddDrug = () => {
         quantity: "",
       });
     } catch (error) {
-      console.error("Error adding drug:", error);
+      console.error("❌ Error adding drug:", error);
       setErrorMessage("Failed to add drug. Please try again.");
     }
   };

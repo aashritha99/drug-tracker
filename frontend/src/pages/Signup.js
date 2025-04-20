@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase-config.js";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -9,6 +10,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [role, setRole] = useState('');
+  const navigate = useNavigate();
 
 
   const handleSignup = async (e) => {
@@ -27,6 +29,18 @@ export default function Signup() {
         token,
         role,
       });
+
+      if(role=="manufacturer"){
+        console.log("Manufacturer");
+        navigate("/dashboard")
+      } else if(role=="user") {
+        console.log("user");
+        navigate("/user-dashboard");
+      } else {
+        alert("Please Choose a role");
+      }
+
+
 
       if (response.data && response.data.message) {
         console.log("✅ User signed up via backend:", response.data);

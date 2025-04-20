@@ -2,11 +2,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Header = ({ role, handleLogout }) => {
+const Header = ({ role }) => {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    handleLogout();
+    if(localStorage.getItem("manufacturer")){
+      localStorage.removeItem("manufacturer");
+    }
+    if(localStorage.getItem("user")){
+      localStorage.removeItem("user");
+    }
     navigate("/login");
   };
 

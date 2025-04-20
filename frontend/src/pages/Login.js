@@ -29,17 +29,19 @@ export default function Login() {
 
       const { user: backendUser } = response.data;
       const role = backendUser.role;
+      console.log("Backend user:", backendUser.role);
 
      // Redirect based on role
      if (role === "manufacturer") {
        navigate("/dashboard");
+       localStorage.setItem("manufacturer" , JSON.stringify(backendUser))
      } else if (role === "user") {
        navigate("/user-dashboard");
       } else {
         alert("Unexpected role.");
       }
 
-      alert("Login successful!");
+      // alert("Login successful!");
     } catch (error) {
       console.error("❌ Firebase login failed:", error.message);
       setError(error.message);

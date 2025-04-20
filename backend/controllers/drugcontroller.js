@@ -1,30 +1,47 @@
+const QRCode = require("qrcode");
 const Drug = require("../models/Drug");
 
 // Add a new drug
 const addDrug = async (req, res) => {
   console.log("🔥 [addDrug] Endpoint called");
   console.log("📦 Request Body:", req.body);
-  console.log("🔐 Authenticated User ID:", req.user?.uid); // from Firebase middleware
+  console.log("🔐 Authenticated User ID:", req.user?._id); // from Firebase middleware
 
   try {
-    const { name, manufacturer, expiryDate, batchNumber } = req.body;
-
+    const { drugName, manufactureDate, expiryDate, batchNumber } = req.body;
+    console.log(drugName);
+    console.log(manufactureDate);
+    console.log(expiryDate);
+    console.log(batchNumber);
     // Validate required fields
-    if (!name || !manufacturer || !expiryDate || !batchNumber) {
+    if (!drugName || !manufactureDate || !expiryDate || !batchNumber) {
       return res.status(400).json({ message: "All fields are required." });
     }
 
+    // Generate QR code with batch-specific info
+    const qrData = JSON.stringify({
+      drugName,
+      batchNumber,
+      manufactureDate,
+      expiryDate,
+    });
+
+    const qrCodeUrl = await QRCode.toDataURL(qrData); // Generate base64 QR image
+
     const newDrug = new Drug({
-      name,
-      manufacturer,
+      name: drugName,
+      manufacturer: manufactureDate,
       expiryDate,
       batchNumber,
-      userId: req.user.uid, // Use Firebase UID
+      userId: req.user._id, // Use Firebase UID
+      qrCodeUrl, // Save QR code to MongoDB
     });
+
+    console.log(newDrug);
 
     await newDrug.save();
 
-    console.log("✅ Drug saved:", newDrug);
+    console.log("✅ Drug saved with QR:", newDrug);
     res.status(201).json({ message: "Drug added successfully", drug: newDrug });
   } catch (err) {
     console.error("❌ Error saving drug:", err.message);

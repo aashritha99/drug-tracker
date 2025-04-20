@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../../components/Header';
+import { useNavigate } from 'react-router-dom';
 
 const UserDashboard = ({ user, handleLogout }) => {
+  const Navigate = useNavigate();
+  useEffect(() => {
+    const manufacturer = JSON.parse(localStorage.getItem("manufacturer"));
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
+    if(manufacturer.role == "manufacturer"){
+      console.log(manufacturer);
+      Navigate("/Dashboard");
+      
+    }
+  } ,[])
   return (
     <div className="min-h-screen bg-gray-50">
       {/* ✅ Reusable Header */}

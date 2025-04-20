@@ -48,22 +48,23 @@ function App() {
 
   return (
     <Router>
+      
       <Routes>
         <Route
           path="/"
           element={
             user ? (
-              // Check user role and redirect accordingly
+              // Redirect based on user role
               user.role === 'manufacturer' ? (
-                <Dashboard user={user} handleLogout={handleLogout} />
+                <Navigate to="/dashboard" />
               ) : (
-                <UserDashboard user={user} handleLogout={handleLogout} />
+                <Navigate to="/user-dashboard" />
               )
             ) : (
               <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-200 via-white to-slate-300 font-sans">
   <div className="p-8 max-w-2xl w-full bg-white/60 backdrop-blur-md rounded-lg shadow-lg">
     <h1 className=" text-3xl  font-extrabold text-center text-purple-600 mb-6 tracking-wide leading-snug ">
-      DrugTrack 
+      DrugTrack
     </h1>
 
     <div>
@@ -94,7 +95,6 @@ function App() {
     </div>
   </div>
 </div>
-
             )
           }
         />

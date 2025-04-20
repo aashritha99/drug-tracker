@@ -16,12 +16,15 @@ const authenticate = async (req, res, next) => {
   try {
     // Step 1: Try verifying with Firebase
     const decodedFirebase = await admin.auth().verifyIdToken(token);
+    console.log(decodedFirebase);
     console.log("✅ Firebase token verified");
 
-    let user = await User.findById(decodedFirebase.userId);
+    let user = await User.findOne({email: decodedFirebase.email});
+    console.log(user);
     if (!user) {
       return res.status(404).json({ message: "User not found (Google auth)" });
     }
+    console.log("crossed")
 
     req.user = user;
     req.authProvider = "firebase";
@@ -34,7 +37,7 @@ const authenticate = async (req, res, next) => {
     // Step 2: Try verifying with your JWT
     const decodedJWT = jwt.verify(token, process.env.JWT_SECRET);
     console.log("✅ JWT token verified");
-    const user = await User.findById(decodedJWT.userId);
+    const user = await User.findById(decodedJWT.user_id);
 
 
     if (!user) {

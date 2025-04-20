@@ -20,7 +20,7 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // ✅ to parse incoming JSON
 app.use("/api/drugs", drugRoutes);
-app.use("/api/drugs", drugRoutes);
+app.use("/api/drugs", require("./drugRoutes"));
 app.use("/api/auth", authRoutes);
 app.use("/api/Contacts", contactRoutes);
 
